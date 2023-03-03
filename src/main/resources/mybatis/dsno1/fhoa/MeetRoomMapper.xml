@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fh.mapper.dsno1.fhoa.MeetRoomMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		OA_MEETROOM
+	</sql>
+	
+	<!--数据字典表名 -->
+	<sql id="dicTableName">
+		SYS_DICTIONARIES
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		f.BIANMA,	
+		f.NTIME,	
+		f.T071,	
+		f.T072,	
+		f.T081,	
+		f.T082,	
+		f.T091,	
+		f.T092,	
+		f.T101,	
+		f.T102,	
+		f.T111,	
+		f.T112,	
+		f.T121,	
+		f.T122,	
+		f.T131,	
+		f.T132,	
+		f.T141,	
+		f.T142,	
+		f.T151,	
+		f.T152,	
+		f.T161,	
+		f.T162,	
+		f.T171,	
+		f.T172,	
+		f.T181,	
+		f.T182,	
+		f.T191,	
+		f.T192,	
+		f.T201,	
+		f.T202,	
+		f.T211,	
+		f.T212,	
+		f.T221,	
+		f.T222,	
+		f.T231,	
+		f.T232,	
+		f.MEETROOM_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		BIANMA,	
+		NTIME,	
+		T071,	
+		T072,	
+		T081,	
+		T082,	
+		T091,	
+		T092,	
+		T101,	
+		T102,	
+		T111,	
+		T112,	
+		T121,	
+		T122,	
+		T131,	
+		T132,	
+		T141,	
+		T142,	
+		T151,	
+		T152,	
+		T161,	
+		T162,	
+		T171,	
+		T172,	
+		T181,	
+		T182,	
+		T191,	
+		T192,	
+		T201,	
+		T202,	
+		T211,	
+		T212,	
+		T221,	
+		T222,	
+		T231,	
+		T232,	
+		MEETROOM_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{BIANMA},	
+		#{NTIME},	
+		#{T071},	
+		#{T072},	
+		#{T081},	
+		#{T082},	
+		#{T091},	
+		#{T092},	
+		#{T101},	
+		#{T102},	
+		#{T111},	
+		#{T112},	
+		#{T121},	
+		#{T122},	
+		#{T131},	
+		#{T132},	
+		#{T141},	
+		#{T142},	
+		#{T151},	
+		#{T152},	
+		#{T161},	
+		#{T162},	
+		#{T171},	
+		#{T172},	
+		#{T181},	
+		#{T182},	
+		#{T191},	
+		#{T192},	
+		#{T201},	
+		#{T202},	
+		#{T211},	
+		#{T212},	
+		#{T221},	
+		#{T222},	
+		#{T231},	
+		#{T232},	
+		#{MEETROOM_ID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			MEETROOM_ID = #{MEETROOM_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			T071 = #{T071},
+			T072 = #{T072},
+			T081 = #{T081},
+			T082 = #{T082},
+			T091 = #{T091},
+			T092 = #{T092},
+			T101 = #{T101},
+			T102 = #{T102},
+			T111 = #{T111},
+			T112 = #{T112},
+			T121 = #{T121},
+			T122 = #{T122},
+			T131 = #{T131},
+			T132 = #{T132},
+			T141 = #{T141},
+			T142 = #{T142},
+			T151 = #{T151},
+			T152 = #{T152},
+			T161 = #{T161},
+			T162 = #{T162},
+			T171 = #{T171},
+			T172 = #{T172},
+			T181 = #{T181},
+			T182 = #{T182},
+			T191 = #{T191},
+			T192 = #{T192},
+			T201 = #{T201},
+			T202 = #{T202},
+			T211 = #{T211},
+			T212 = #{T212},
+			T221 = #{T221},
+			T222 = #{T222},
+			T231 = #{T231},
+			T232 = #{T232}
+		where 
+			BIANMA = #{BIANMA}
+		and
+			NTIME = #{NTIME}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+		where 
+			f.BIANMA = #{BIANMA}
+		and
+			f.NTIME = #{NTIME}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+			d.NAME,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+		left join
+		<include refid="dicTableName"></include> d
+		on f.BIANMA = d.BIANMA
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select 
+			d.NAME,
+			d.BIANMA,
+			f.NTIME,	
+			f.T071,	
+			f.T072,	
+			f.T081,	
+			f.T082,	
+			f.T091,	
+			f.T092,	
+			f.T101,	
+			f.T102,	
+			f.T111,	
+			f.T112,	
+			f.T121,	
+			f.T122,	
+			f.T131,	
+			f.T132,	
+			f.T141,	
+			f.T142,	
+			f.T151,	
+			f.T152,	
+			f.T161,	
+			f.T162,	
+			f.T171,	
+			f.T172,	
+			f.T181,	
+			f.T182,	
+			f.T191,	
+			f.T192,	
+			f.T201,	
+			f.T202,	
+			f.T211,	
+			f.T212,	
+			f.T221,	
+			f.T222,	
+			f.T231,	
+			f.T232,	
+			f.MEETROOM_ID
+		from 
+		(
+			select 
+				l.NAME,
+				l.BIANMA
+			from
+			<include refid="dicTableName"></include> l
+			where 
+				l.PARENT_ID = #{DICTIONARIES_ID}
+		) d
+		left join
+		<include refid="tableName"></include> f
+		on
+			d.BIANMA = f.BIANMA
+		and
+			f.NTIME = #{NTIME}
+		order by d.NAME
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			MEETROOM_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- fh313596790qq(青苔) -->
+</mapper>

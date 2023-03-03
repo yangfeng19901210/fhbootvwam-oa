@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fh.mapper.dsno1.fhoa.MeetingMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		OA_MEETING
+	</sql>
+	
+	<!--数据字典表名 -->
+	<sql id="dicTableName">
+		SYS_DICTIONARIES
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		f.TITLE,	
+		f.MANAGER,	
+		f.STIME,	
+		f.ETIME,	
+		f.TYPE,	
+		f.REMARKS,	
+		f.PERSONNEL,	
+		f.PERSONNELID,	
+		f.MROOM,	
+		f.CONTENT,	
+		f.SUMMARY,	
+		f.MEETING_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		TITLE,	
+		MANAGER,	
+		STIME,	
+		ETIME,	
+		TYPE,	
+		REMARKS,	
+		PERSONNEL,	
+		PERSONNELID,	
+		MROOM,	
+		CONTENT,	
+		SUMMARY,	
+		MEETING_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{TITLE},	
+		#{MANAGER},	
+		#{STIME},	
+		#{ETIME},	
+		#{TYPE},	
+		#{REMARKS},	
+		#{PERSONNEL},	
+		#{PERSONNELID},	
+		#{MROOM},	
+		#{CONTENT},	
+		#{SUMMARY},	
+		#{MEETING_ID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			MEETING_ID = #{MEETING_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			TITLE = #{TITLE},
+			MANAGER = #{MANAGER},
+			STIME = #{STIME},
+			ETIME = #{ETIME},
+			TYPE = #{TYPE},
+			REMARKS = #{REMARKS},
+			PERSONNEL = #{PERSONNEL},
+			PERSONNELID = #{PERSONNELID},
+			MROOM = #{MROOM},
+			CONTENT = #{CONTENT},
+			SUMMARY = #{SUMMARY},
+			MEETING_ID = MEETING_ID
+		where 
+			MEETING_ID = #{MEETING_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+		where 
+			f.MEETING_ID = #{MEETING_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+			d9.BIANMA BIANMA9,
+			d9.NAME DNAME9,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+			left join 
+			<include refid="dicTableName"></include> d9
+			on f.MROOM = d9.BIANMA
+		where 1=1
+		<if test="pd.KEYWORDS != null and pd.KEYWORDS != ''"><!-- 关键词检索 -->
+			and
+				(
+					f.TITLE LIKE CONCAT(CONCAT('%', #{pd.KEYWORDS}),'%')
+					 or 
+					f.MANAGER LIKE CONCAT(CONCAT('%', #{pd.KEYWORDS}),'%') 
+					 or 
+					f.CONTENT LIKE CONCAT(CONCAT('%', #{pd.KEYWORDS}),'%') 
+					 or 
+					d9.NAME LIKE CONCAT(CONCAT('%', #{pd.KEYWORDS}),'%')
+				)
+		</if>
+		<if test="pd.TYPE != null and pd.TYPE != ''"><!-- 类别 -->
+			and f.TYPE = #{pd.TYPE}
+		</if>
+			order by f.STIME desc
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			MEETING_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- fh313596790qq(青苔) -->
+</mapper>
