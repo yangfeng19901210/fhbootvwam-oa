@@ -30,12 +30,12 @@ public class ActivitiConfig {
 		DataSource dataSource = applicationContext.getBean(DataSource.class);
 		SpringProcessEngineConfiguration config = new SpringProcessEngineConfiguration();
 		config.setDataSource(dataSource);
-		config.setDbIdentityUsed(false);
+//		config.setDbIdentityUsed(false);
 		config.setTransactionManager(transactionManager);
 		/**设置字体**/
-		config.setActivityFontName("宋体");
-		config.setLabelFontName("宋体");
-		config.setAnnotationFontName("宋体");
+//		config.setActivityFontName("宋体");
+//		config.setLabelFontName("宋体");
+//		config.setAnnotationFontName("宋体");
 		config.setDatabaseType("mysql");
 		return config;
 	}

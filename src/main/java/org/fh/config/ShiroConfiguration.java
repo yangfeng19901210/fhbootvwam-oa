@@ -94,7 +94,7 @@ public class ShiroConfiguration {
 		return creator;
 	}
 
-	@Bean(name = "securityManager")
+	@Bean(name = "securityManager1")
 	public DefaultWebSecurityManager defaultWebSecurityManager(MyShiroRealm realm,  EhCacheManager ehCacheManager) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(realm);	// 设置realm
